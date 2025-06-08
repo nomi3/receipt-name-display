@@ -3,7 +3,7 @@
 <title>宛名</title>
 <style>
   body{margin:0;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
-       font-size:10vw;font-weight:bold;text-align:center;word-break:break-word;}
+       font-size:10vw;font-weight:bold;text-align:center;word-break:break-word;white-space:pre-wrap;}
   #setup{font-size:6vw;gap:.5em}
   input{font-size:4vw;padding:.3em;width:80vw;max-width:500px}
   button{font-size:4vw;padding:.3em 1.2em}
@@ -25,8 +25,12 @@ const KEY = 'receipt_name';
 const saved = localStorage.getItem(KEY);
 if (saved) showDisplay(saved); else showSetup();
 
+function wrapText(str, len = 8){
+  return str.length > len ? str.match(new RegExp(`.{1,${len}}`, 'g')).join('\n') : str;
+}
+
 function showDisplay(text){
-  nameBig.textContent = text;
+  nameBig.textContent = wrapText(text);
   display.hidden = false;  setup.hidden = true;
 }
 function showSetup(){
